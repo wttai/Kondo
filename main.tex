@@ -1,0 +1,151 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{bm}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{braket}
+\usepackage{xcolor}
+\title{Kondo}
+\author{wt662606957 }
+\date{February 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+
+Kondo effect is manifest only in metallic alloys with magnetic impurities. 
+
+The \textit{s-d} interaction between electrons as the chief contributor of the logarithmic term. This \textit{s-d} interaction is between the conducting electrons in the \textit{s} orbital and the electrons in the inner \textit{d} orbital. The interaction part of the Hamiltonian can be written as 
+
+\begin{equation}\label{eq:int}
+    H' = {\sum\sum}_{i<j} \frac{e^2}{r_{ij}}
+\end{equation}
+
+We expand the wavefucntion in the basis
+
+\begin{equation}
+    \psi(r) = \sum_{t}\sum_{\nu}a_{t\nu}\psi_{t\nu}(r)
+\end{equation}
+
+, where $t$ is the character of the orbital state and $\nu$ the spin. Under this expansion, the Hamiltonian \ref{eq:int} can be written as
+
+\begin{equation}
+    H' = \frac{1}{2}\sum_{t_1t_2t_3t_4\nu\mu}a_{t_1\nu}^* a_{t_2\mu}^* \braket{t_1, t_2| \frac{e^2}{r} | t_3,t_4} a_{t_3\mu} a_{t_4\nu}
+\end{equation}
+
+We neglect both the inter-atomic interaction and the interaction between conduction electrons, only considering instead the interaction between the conduction electrons and the unfilled shell electrons. Further ignoring the transition among conduction electrons and the unfilled shell electrons and only considering interactions that conserve the number of conduction electrons and unfilled shell electrons, we obtain two terms:
+
+
+\begin{equation}
+\begin{split}
+H' &= \sum_{T_1 \ne T_2} \sum_{t_1 \ne t_2} \sum_{\mu \nu} A_{T_1 \nu}^* a_{t_1 \mu}^*  \braket{T_1, t_1| \frac{e^2}{r} | t_2,T_2} a_{t_2 \mu} A_{T_2 \nu} \\
+&+ \sum_{T_1 T_2} \sum_{t_1 t_2} \sum_{\mu \nu} A_{T_1 \mu}^* a_{t_1 \nu}^*  \braket{T_1, t_1| \frac{e^2}{r} | T_2,t_2} A_{t_2 \mu} a_{T_2 \nu}
+\end{split}
+\end{equation}
+
+Here, the capital and small letters stand for the orbital states or creation (annihilation) operators on unfilled shell electrons and conduction electrons respectively. The first term is the correlation energy and is independent of spin. The second term is the exchange interaction, which is the term responsible for Kondo effect. We take the conduction electron states to be Bloch wave functions $\braket{\bm{r}|t_1,n} = 
+\frac{1}{\sqrt{N}}\exp{(-i\bm{k_{t_1} \cdot  R_n})}\psi_{k}(r)$, where $n$ is the atomic position, and the unfilled shell electron states to be atomic, orthonormal wavefunctions.
+
+Decomposing the creation (annihilation) operator to the orbital and spin components and changing the labels $t$ to $k$ to better show its characteristic as a Bloch wavevector, the Hamiltonian can then be written as
+
+\begin{equation}
+\begin{split}
+    H' &= -\frac{1}{N} 
+    \sum_{n\bm{kk'}}J(\bm{k, k'})\exp{(i(\bm{k-k'})\cdot \bm{R}_{n})}\\
+    &\times\left\{( a_{\bm{k'}+}^* a_{\bm{k}+} - a_{\bm{k'}-}^* a_{\bm{k}-}) S^z_n +  a_{\bm{k'}+}^* a_{\bm{k}-} S^-_n + a_{\bm{k'}-}^* a_{\bm{k}+} S^+_n \right\}
+\end{split}
+\end{equation}
+
+where 
+
+\begin{equation}
+    J(\bm{k},\bm{k}')= N\int\int d\bm{r}_1 d\bm{r}_2 \psi_{dn}^{*}(r_1)\psi_{t}^{*}(r_2) \frac{e^2}{r_{12}} \psi_{dn}(r_2)\psi_{k'}(r_1) 
+    %\exp{(i(\bm{k'-k})\cdot \bm{R}_{n})}
+\end{equation}
+
+{\color{red} AN: Discuss how the exponential term come into being}
+
+This function $J(\bm{k},\bm{k}')$ represents the expected value for the overlapping. This function only depends sensitively on the difference $\bm{q}=|\bm{k}-\bm{k}'|$ and is independent on the atomic position $n$. We can expect that this is roughly constant when $\bm{q}$ is small, and drops to zero as $\bm{q}$ approaches the characteristic magnitude of the reciprocal lattice vectors. For simplicity, we can take this as constant.
+
+{\color{red} AN: Discuss the validity of this claim} 
+
+The transition probability from $a$ to $b$ per unit time can be given as, using Born approximation up to second order:
+
+\begin{equation}\label{eq:wab}
+\begin{split}
+    W(a\rightarrow b) &= \frac{2\pi}{\hbar} \delta(E_a - E_b) \\
+    &\times\{H'_{ab}H'_{ba} + \sum_{c\ne a} \frac{1}{E_a - E_c}(H'_{ac}H'_{cb}H'_{ba} + \text{h.c.})\}
+\end{split}
+\end{equation}
+
+{\color{red} AN: All resources on Born approximation seem to be about non-relativistic quantum scattering. This form seems more like Green function. Any pointers?}
+
+We first consider a scattering from a electron of positive spin to positive spin. There are four possibilities for the intermediate group:
+
+\begin{enumerate}
+    \item $\ket{\dots \bm{q}+\dots \bm{k}+}\ket{\dots M_n \dots}\rightarrow \ket{ \dots \bm{q}+\dots \bm{q}'+}\ket{\dots M_n \dots}\rightarrow \ket{ \dots \bm{q}+\dots \bm{k}'+}\ket{\dots M_n \dots}$
+    
+    \item $\ket{\dots \bm{q}+\dots \bm{k}+}\ket{\dots M_n \dots}\rightarrow \ket{ \dots \bm{k}'+\dots \bm{k}+}\ket{\dots M_n \dots}\rightarrow \ket{ \dots \bm{k}'+\dots \bm{q}+}\ket{\dots M_n \dots}$
+    
+    \item $\ket{\dots \bm{q}+\dots \bm{k}+}\ket{\dots M_n \dots}\rightarrow \ket{ \dots \bm{q}+\dots \bm{q}'-}\ket{\dots M_n+1 \dots}\rightarrow \ket{ \dots \bm{q}+\dots \bm{k}'+}\ket{\dots M_n \dots}$
+    
+    \item $\ket{\dots \bm{q}-\dots \bm{k}+}\ket{\dots M_n \dots}\rightarrow \ket{ \dots \bm{k}'+\dots \bm{k}+}\ket{\dots M_n -1\dots}\rightarrow \ket{ \dots \bm{k}'+\dots \bm{q}+}\ket{\dots M_n \dots}$
+\end{enumerate}
+
+The resulting second-order term from (\ref{eq:wab}) is then, adding this four terms together and evaluating the terms,
+
+\begin{equation}\label{eq:wab_expanded}
+\begin{split}
+    & 2(-J/N)^3\sum_{n}M_n^3 \sum_{\bm{q}'}(1-f^0_{\bm{q}'})(\epsilon_{\bm{k}}-\epsilon_{\bm{q}'}) \\
+    &-2(-J/N)^3\sum_{n}M_n^3 \sum_{\bm{q}'}(f^0_{\bm{q}})\epsilon_{\bm{q}}-\epsilon_{\bm{k}'}) \\
+    &+2(-J/N)^3\sum_{n}M_n(S-M_n)(S+M_n+1)\sum_{\bm{q}'}(1-f^0_{\bm{q}'})(\epsilon_{\bm{k}}-\epsilon_{\bm{q}'}) \\
+    &-2(-J/N)^3\sum_{n}M_n(S+M_n)(S-M_n+1)\sum_{\bm{q}'}f^0_{\bm{q}'}(\epsilon_{\bm{q}}-\epsilon_{\bm{k}'})
+\end{split}
+\end{equation}
+
+Taking energy conservation between the initial and end state ($\epsilon_{\bm{k}}=\epsilon_{\bm{k}'}$) and defining
+
+\begin{equation}
+    g(\epsilon)=\frac{1}{N}\sum_{\bm{q}} \frac{f^0_{\bm{q}}}{\epsilon_{\bm{q}}-\epsilon}
+\end{equation}
+
+Then after some massaging, we can obtain
+
+\begin{equation}
+    W(\bm{k}+\rightarrow \bm{k}'+) = \frac{2\pi J^2 S(S+1)c}{3\hbar N}\{1+4J g(\epsilon_{\bm{k}})\}\delta(\epsilon_{\bm{k}}-\epsilon_{\bm{k'}})
+\end{equation}
+
+The first term is independent on temperature and is therefore insubstantial in the upcoming calculation. The second part, however, is. It arises from the third and fourth term in (\ref{eq:wab_expanded}). This arises from the fact that the the z-component of the localized spin in the third and fourth process undergoes different procedures: in the third one, it is first decreased by one and then increased back, while in the fourth one, it is the other way round. Due to the fact that $S^+$ and $S^-$ do not commute, the resulting term is dependent on $g(\epsilon_{\bm{k}})$
+
+\iffalse
+
+In the end, there will be a temperature dependent term 
+
+\begin{equation}
+    \frac{4J^3}{N^3}\sum_{n} M_n^2\sum_{\bm{q}}\frac{f^0_{\bm{q}}}{\epsilon_{\bm{q}} - \epsilon_{\bm{k}}} 
+\end{equation}
+
+\fi
+
+This term will give the logarithmic term in the end. This term arises due to the asymmetry between the spin-up and spin-down term, which is in turn created by the localized spin $M_n$. This is why Kondo effect is only manifest in alloys with magnetic impurities. When the impurity atoms have no magnetic moments, the resistivity of the allow does not diverge at low-temperature, but will instead decay to a constant value.
+
+{\color{red} AN: Discuss this. Is magnetism and odd spin atoms equivalent?}
+
+{\color{red} \dots}
+
+The derivative of the probability density of state $\bm{k}^\pm$ can be calculated as
+
+\begin{equation}
+    \frac{\partial f^{\pm}_{\bm{k}}}{\partial t} = \dots
+\end{equation}
+
+The conductivity can be calculated using the Boltzmann equation. The result is 
+
+\end{document}
